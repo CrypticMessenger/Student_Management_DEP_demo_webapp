@@ -8,7 +8,7 @@ export default function Login() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password,setPassword] = useState(0);
-  const [success,setSuccess] = useState(false);
+  const [msg,setMsg] = useState("Send OTP");
   const [show, setShow] = useState(false);
   const [otp, setOtp] = useState(0);
   const [isDisabled, setisDisabled] = useState(false)
@@ -23,6 +23,7 @@ export default function Login() {
         setOtp(res.data.otp)
       })
       setisDisabled(true);
+      setMsg("Login")
    
       
   }
@@ -35,6 +36,7 @@ export default function Login() {
     else{
       setisDisabled(false);
       setEmail("");
+      setMsg("Send OTP")
     }
   }
   const handlePasswordChange = (e)=>{
