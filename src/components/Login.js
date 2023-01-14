@@ -1,32 +1,40 @@
 import {React,useState} from 'react'
 import { Card, Text, CardBody, CardFooter,Image,Stack,Heading,Input,Divider,ButtonGroup,Button,InputRightElement,InputGroup } from '@chakra-ui/react'
 import { useNavigate } from "react-router-dom";
-
+import axios from "axios";
 
 export default function Login() {
-  const [credentials, setCredentials] = useState({
-    "username":"abc@123",
-    "password":"123"
-  })
+ 
   const navigate = useNavigate();
-  const [username, setUsername] = useState("");
-  const [password,setPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [password,setPassword] = useState(0);
   const [success,setSuccess] = useState(false);
   const [show, setShow] = useState(false);
+  const [otp, setOtp] = useState(0);
+  const [isDisabled, setisDisabled] = useState(false)
   const handleUsernameChange = (e)=>{
-    setUsername(e.target.value);
+    setEmail(e.target.value);
   }
-  const handleSubmit = ()=>{
-    if (username === credentials.username && password === credentials.password){
-      setSuccess(true);
-      setUsername("");
-      setPassword("");
-      navigate("/home")
+  const handleSubmit = (e)=>{
+    e.preventDefault();
+    
+  
+      axios.post("http://localhost:5000/api/otp",{email:email}).then(res=>{
+        setOtp(res.data.otp)
+      })
+      setisDisabled(true);
+   
+      
+  }
+  const handleOtp = (e)=>{
+    console.log(otp)
+    console.log(password)
+    if((''+otp) === password ){
+      navigate('/home');
     }
     else{
-      setSuccess(false);
-      setUsername("");
-      setPassword("");
+      setisDisabled(false);
+      setEmail("");
     }
   }
   const handlePasswordChange = (e)=>{
@@ -46,20 +54,23 @@ export default function Login() {
     />
     <Stack mt='6' spacing='3'>
       <Heading size='md'>Login</Heading>
-      <Input placeholder='Enter Username' value={username} onChange={handleUsernameChange}/>
+      <Input placeholder='Enter email' disabled ={isDisabled} type="email" value={email} onChange={handleUsernameChange}/>
       <InputGroup size='md'>
-      <Input
+      {/* <Input
         pr='4.5rem'
         type={show ? 'text' : 'password'}
         placeholder='Enter password'
         value={password} 
         onChange={handlePasswordChange}
-      />
-      <InputRightElement width='4.5rem'>
-        <Button h='1.75rem' size='sm' onClick={handleClick}>
-          {show ? 'Hide' : 'Show'}
-        </Button>
-      </InputRightElement>
+      /> */}
+      {isDisabled && <Input
+        pr='4.5rem'
+        placeholder='Enter OTP'
+        value={password} 
+        onChange={handlePasswordChange}
+      />}
+      //! add alert and toast notifications
+      
     </InputGroup>
      
     {/* <Heading>{success? "SUCCESS":"INVALID CREDENTIALS"}</Heading> */}
@@ -68,7 +79,7 @@ export default function Login() {
   <Divider />
   <CardFooter>
     <ButtonGroup spacing='2'>
-      <Button variant='solid' colorScheme='blue' onClick={handleSubmit}>
+      <Button variant='solid' colorScheme='blue' onClick={isDisabled? handleOtp:handleSubmit}>
         Login
       </Button>
       
