@@ -12,7 +12,7 @@ export default function Login() {
   const [username, setUsername] = useState("");
   const [password,setPassword] = useState("");
   const [success,setSuccess] = useState(false);
-  const [show, setShow] = useState(false)
+  const [show, setShow] = useState(false);
   const handleUsernameChange = (e)=>{
     setUsername(e.target.value);
   }
@@ -36,6 +36,7 @@ export default function Login() {
     setShow(!show);
   }
   return (
+    
   <Card maxW='sm'>
   <CardBody>
     <Image
@@ -61,7 +62,7 @@ export default function Login() {
       </InputRightElement>
     </InputGroup>
      
-      <Heading>{success? "SUCCESS":"INVALID CREDENTIALS"}</Heading>
+    {/* <Heading>{success? "SUCCESS":"INVALID CREDENTIALS"}</Heading> */}
     </Stack>
   </CardBody>
   <Divider />
