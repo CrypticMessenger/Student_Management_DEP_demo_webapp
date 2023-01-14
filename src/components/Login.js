@@ -36,6 +36,7 @@ export default function Login() {
     else{
       setisDisabled(false);
       setEmail("");
+      setPassword("");
       setMsg("Send OTP")
     }
   }
@@ -82,7 +83,7 @@ export default function Login() {
   <CardFooter>
     <ButtonGroup spacing='2'>
       <Button variant='solid' colorScheme='blue' onClick={isDisabled? handleOtp:handleSubmit}>
-        Login
+        {msg}
       </Button>
       
     </ButtonGroup>
