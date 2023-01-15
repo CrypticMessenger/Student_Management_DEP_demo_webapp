@@ -11,34 +11,74 @@ export default function Login() {
   const [msg,setMsg] = useState("Send OTP");
   const [show, setShow] = useState(false);
   const [otp, setOtp] = useState(0);
+  const [success, setSuccess] = useState(false)
+  const [otp_sent, setOtp_sent] = useState(false)
   const [isDisabled, setisDisabled] = useState(false)
   const handleUsernameChange = (e)=>{
     setEmail(e.target.value);
+  }
+  async function handleFirstSubmit(email){
+    await axios.post("http://localhost:5000/api/otp",{email:email}).then(res=>{
+        setSuccess(res.data.success)
+        setOtp_sent(res.data.otp_sent)
+      }).then(()=>{
+
+        console.log(otp_sent);
+        console.log(success);
+        if(otp_sent){
+          setisDisabled(true);
+          setMsg("Login")
+        }
+        else if(!success){
+          navigate('/')
+        }
+        else{
+          navigate('/home')
+        }
+      });
   }
   const handleSubmit = (e)=>{
     e.preventDefault();
     
   
-      axios.post("http://localhost:5000/api/otp",{email:email}).then(res=>{
-        setOtp(res.data.otp)
-      })
-      setisDisabled(true);
-      setMsg("Login")
+      // axios.post("http://localhost:5000/api/otp",{email:email}).then(res=>{
+      //   setSuccess(res.data.success)
+      //   setOtp_sent(res.data.otp_sent)
+      // })
+      handleFirstSubmit(email);
+      // console.log(otp_sent);
+      // console.log(success);
+      // if(otp_sent){
+      //   setisDisabled(true);
+      //   setMsg("Login")
+      // }
+      // else if(!success){
+      //   navigate('/')
+      // }
+      // else{
+      //   navigate('/home')
+      // }
    
       
   }
   const handleOtp = (e)=>{
-    console.log(otp)
-    console.log(password)
-    if((''+otp) === password ){
-      navigate('/home');
-    }
-    else{
-      setisDisabled(false);
-      setEmail("");
-      setPassword("");
-      setMsg("Send OTP")
-    }
+    axios.get("http://localhost:5000/api/auth",{email:email,password:password}).then(res=>{
+      if(res.data.success){
+        navigate('/home')
+      }
+      else{
+        navigate('/')
+      }
+    })
+    // if((''+otp) === password ){
+    //   navigate('/home');
+    // }
+    // else{
+    //   setisDisabled(false);
+    //   setEmail("");
+    //   setPassword("");
+    //   setMsg("Send OTP")
+    // }
   }
   const handlePasswordChange = (e)=>{
     setPassword(e.target.value);
