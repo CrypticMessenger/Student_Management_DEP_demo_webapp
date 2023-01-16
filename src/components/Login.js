@@ -1,4 +1,4 @@
-import {React,useState} from 'react'
+import {React,useEffect,useState} from 'react'
 import { Card, Text, CardBody, CardFooter,Image,Stack,Heading,Input,Divider,ButtonGroup,Button,InputRightElement,InputGroup } from '@chakra-ui/react'
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -7,85 +7,46 @@ export default function Login() {
  
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
-  const [password,setPassword] = useState(0);
-  const [msg,setMsg] = useState("Send OTP");
-  const [show, setShow] = useState(false);
-  const [otp, setOtp] = useState(0);
-  const [success, setSuccess] = useState(false)
-  const [otp_sent, setOtp_sent] = useState(false)
-  const [isDisabled, setisDisabled] = useState(false)
+  const [password,setPassword] = useState("");
+ 
+
+
+  useEffect(() => {
+    if(localStorage.getItem('login')){
+      navigate('/home')
+    }
+  },[])
+  
   const handleUsernameChange = (e)=>{
     setEmail(e.target.value);
   }
-  async function handleFirstSubmit(email){
-    await axios.post("http://localhost:5000/api/otp",{email:email}).then(res=>{
-        setSuccess(res.data.success)
-        setOtp_sent(res.data.otp_sent)
-      }).then(()=>{
-
-        console.log(otp_sent);
-        console.log(success);
-        if(otp_sent){
-          setisDisabled(true);
-          setMsg("Login")
-        }
-        else if(!success){
-          navigate('/')
-        }
-        else{
-          navigate('/home')
-        }
-      });
-  }
-  const handleSubmit = (e)=>{
+ 
+  const handleSubmit = async (e)=>{
     e.preventDefault();
     
   
-      // axios.post("http://localhost:5000/api/otp",{email:email}).then(res=>{
-      //   setSuccess(res.data.success)
-      //   setOtp_sent(res.data.otp_sent)
-      // })
-      handleFirstSubmit(email);
-      // console.log(otp_sent);
-      // console.log(success);
-      // if(otp_sent){
-      //   setisDisabled(true);
-      //   setMsg("Login")
-      // }
-      // else if(!success){
-      //   navigate('/')
-      // }
-      // else{
-      //   navigate('/home')
-      // }
+    
+      
+    let body = {email:email, password:password};
+    const res = await axios.post("http://localhost:5000/api/login",{data:body});
+    if(res.data.success){
+      navigate('/home');
+      localStorage.setItem("login","true");
+    }
+    else{
+      alert("wrong email / password entered!");
+      navigate('/')
+      setEmail("");
+      setPassword("");
+    }
    
       
   }
-  const handleOtp = (e)=>{
-    axios.get("http://localhost:5000/api/auth",{email:email,password:password}).then(res=>{
-      if(res.data.success){
-        navigate('/home')
-      }
-      else{
-        navigate('/')
-      }
-    })
-    // if((''+otp) === password ){
-    //   navigate('/home');
-    // }
-    // else{
-    //   setisDisabled(false);
-    //   setEmail("");
-    //   setPassword("");
-    //   setMsg("Send OTP")
-    // }
-  }
+ 
   const handlePasswordChange = (e)=>{
     setPassword(e.target.value);
   }
-  const handleClick = ()=>{
-    setShow(!show);
-  }
+  
   return (
     
   <Card maxW='sm'>
@@ -97,7 +58,7 @@ export default function Login() {
     />
     <Stack mt='6' spacing='3'>
       <Heading size='md'>Login</Heading>
-      <Input placeholder='Enter email' disabled ={isDisabled} type="email" value={email} onChange={handleUsernameChange}/>
+      <Input placeholder='Enter email'  type="email" value={email} onChange={handleUsernameChange}/>
       <InputGroup size='md'>
       {/* <Input
         pr='4.5rem'
@@ -106,9 +67,9 @@ export default function Login() {
         value={password} 
         onChange={handlePasswordChange}
       /> */}
-      {isDisabled && <Input
+      { <Input
         pr='4.5rem'
-        placeholder='Enter OTP'
+        placeholder='Enter Password'
         value={password} 
         onChange={handlePasswordChange}
       />}
@@ -122,8 +83,8 @@ export default function Login() {
   <Divider />
   <CardFooter>
     <ButtonGroup spacing='2'>
-      <Button variant='solid' colorScheme='blue' onClick={isDisabled? handleOtp:handleSubmit}>
-        {msg}
+      <Button variant='solid' colorScheme='blue' onClick={handleSubmit}>
+        {"Login"}
       </Button>
       
     </ButtonGroup>

@@ -9,6 +9,7 @@ const uri = "mongodb+srv://ankitsharma61016:anil1972@otp-auth.wdondav.mongodb.ne
 const client = new MongoClient(uri);
 client.connect();
 const collection = client.db("test").collection('otp');
+const collection_users = client.db("current_users").collection('users');
 // collection.insertOne({'email':'ankitsharma61016@gmail.com','otp':1234});
 // collection.findOne({'email':'ankitsharma61016@gmail.com'},(err,data)=>{
 //   if(err){
@@ -21,6 +22,7 @@ const collection = client.db("test").collection('otp');
 //     console.log("otp is: ",data.otp)
 //   }
 // });
+
 // Create a transport object to configure the email server
 const transport = nodemailer.createTransport({
     service:"gmail",
@@ -60,19 +62,21 @@ app.post('/api/otp',(req,res)=>{
         res.send({success:true,otp_sent:false})
       }
     });
-    // const mailOptions = {
-    //     from: 'ankit13112002.sharma@gmail.com', // replace with the sender's email address
-    //     to: req.body.email, // replace with the recipient's email address
-    //     subject: 'OTP for authentication', // replace with the email subject
-    //     text: `your OTP for authentication is ${otp}` // replace with the email body
-    //   };
-    // transport.sendMail(mailOptions, (error, info) => {
-    // if (error) {
-    //     res.status(500).send(error);
-    // } else {
-    //     res.send({success: true, otp:otp,message:"sent successfullly"});
-    // }
-    // });
+    
+})
+
+app.post('/api/login',async  (req, res) => {
+  const email = req.body.data.email;
+  const password = req.body.data.password;
+   const data = await collection_users.find({email:'2020csb1072@iitrpr.ac.in'}).project({}).toArray()
+   console.log(data)
+  if(data[0].email === email && data[0].password === password){
+    res.send({success: true})
+  }
+  else[
+    res.send({success: false})
+  ]
+
 })
 
 app.get('/api/auth',(req, res) => {
