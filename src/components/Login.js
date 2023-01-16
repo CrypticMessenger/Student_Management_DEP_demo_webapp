@@ -8,15 +8,15 @@ export default function Login() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password,setPassword] = useState("");
- 
+  const [prevlogin, setPrevlogin] = useState(false);
 
 
   useEffect(() => {
     if(localStorage.getItem('login')){
-      navigate('/home')
+      setPrevlogin(true)
     }
   },[])
-  
+
   const handleUsernameChange = (e)=>{
     setEmail(e.target.value);
   }
@@ -31,7 +31,7 @@ export default function Login() {
     const res = await axios.post("http://localhost:5000/api/login",{data:body});
     if(res.data.success){
       navigate('/home');
-      localStorage.setItem("login","true");
+      localStorage.setItem("login",`${email}`);
     }
     else{
       alert("wrong email / password entered!");
@@ -46,9 +46,18 @@ export default function Login() {
   const handlePasswordChange = (e)=>{
     setPassword(e.target.value);
   }
+  const handleContinue = ()=>{
+    alert(`logging in as ${localStorage.getItem('login')} `)
+    navigate('/home')
+  }
   
   return (
-    
+    <>
+
+  {prevlogin && (<Button variant='solid' colorScheme='blue' onClick={handleContinue}>
+  "continue previous account"
+  </Button>)}
+  <Divider/>
   <Card maxW='sm'>
   <CardBody>
     <Image
@@ -90,5 +99,6 @@ export default function Login() {
     </ButtonGroup>
   </CardFooter>
 </Card>
+    </>
   )
 }
