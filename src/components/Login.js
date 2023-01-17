@@ -1,7 +1,6 @@
 import {React,useEffect,useState} from 'react'
-import { Card, Text, CardBody, CardFooter,Image,Stack,Heading,Input,Divider,ButtonGroup,Button,Alert,AlertIcon,AlertTitle,AlertDescription,InputGroup } from '@chakra-ui/react'
+import { Card, Text, CardBody, CardFooter,Image,Stack,Heading,Input,Divider,ButtonGroup,Button,InputRightElement,InputGroup, Container } from '@chakra-ui/react'
 import { useNavigate } from "react-router-dom";
-import StudentCourses from './StudentCourses';
 import axios from "axios";
 
 export default function Login() {
@@ -10,7 +9,7 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password,setPassword] = useState("");
   const [prevlogin, setPrevlogin] = useState(false);
-  const [wrong_pwd, setWrong_pwd] = useState(false)
+
 
   useEffect(() => {
     if(localStorage.getItem('login')){
@@ -36,7 +35,6 @@ export default function Login() {
     }
     else{
       alert("wrong email / password entered!");
-      setWrong_pwd(true)
       navigate('/')
       setEmail("");
       setPassword("");
@@ -55,23 +53,24 @@ export default function Login() {
   
   return (
     <>
+<Container mt={12}>
 
-  {prevlogin && (<Button variant='solid' colorScheme='blue' onClick={handleContinue}>
-  continue previous account
+  {prevlogin && (<Button variant='solid' colorScheme='blue' onClick={handleContinue} mb={8} ml={'25%'} >
+  Continue previous account
   </Button>)}
-  {<StudentCourses/>}
+
   <Divider/>
-  <Card maxW='sm'>
-  <CardBody>
+  <Card maxW='sm' ml={'10%'}>
+  <CardBody backgroundColor={'#8DCBE6'}>
     <Image
-      src='https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80'
-      alt='Green double couch with wooden legs'
+      src='https://qph.cf2.quoracdn.net/main-qimg-931e2ae90300fef481552c51ec1b659c-lq'
+      alt='Hostel'
       borderRadius='lg'
     />
     <Stack mt='6' spacing='3'>
-      <Heading size='md'>Login</Heading>
-      <Input placeholder='Enter email'  type="email" value={email} onChange={handleUsernameChange}/>
-      <InputGroup size='md'>
+      <Heading size='md' margin={'auto'} fontFamily={'Montserrat'}>Login</Heading>
+      <Input placeholder='Enter email'  type="email" value={email} onChange={handleUsernameChange} backgroundColor={'white'}/>
+      <InputGroup size='md' backgroundColor={'white'}>
       {/* <Input
         pr='4.5rem'
         type={show ? 'text' : 'password'}
@@ -84,12 +83,7 @@ export default function Login() {
         placeholder='Enter Password'
         value={password} 
         onChange={handlePasswordChange}
-      />}<br/>
-      {wrong_pwd && <Alert status='error'>
-        <AlertIcon />
-        <AlertTitle>Wrong Password/Email entered</AlertTitle>
-        <AlertDescription>Kindly enter correct credentials.</AlertDescription>
-      </Alert>}
+        />}
       //! add alert and toast notifications
       
     </InputGroup>
@@ -99,14 +93,18 @@ export default function Login() {
   </CardBody>
   <Divider />
   <CardFooter>
-    <ButtonGroup spacing='2'>
+    
+    <ButtonGroup spacing='2' margin={'auto'}>
+    
       <Button variant='solid' colorScheme='blue' onClick={handleSubmit}>
         {"Login"}
       </Button>
       
     </ButtonGroup>
+    
   </CardFooter>
 </Card>
+        </Container>
     </>
   )
 }
