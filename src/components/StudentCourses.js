@@ -3,26 +3,36 @@ import {Text} from "@chakra-ui/react"
 import axios from 'axios'
 
 export default function StudentCourses(props) {
-    const [data, setData] = useState({})
+    const [data, setData] = useState([])
+    const [isDataLoaded, setIsDataLoaded] = useState(false);
     const fetchData = async ()=>{
-        const res = await axios.get("http://localhost:5000/api/courses");
-        
-        console.log("res= \n")
-        console.log(res.data.data)
-        setData(res.data.data);
-        console.log(res.data)
-        console.log(data)
+        const res = await axios.post("http://localhost:5000/api/courses");
+        // if(res.data.data){
+        //     console.log("data is present and good")
+        // }
+        // console.log( res.data.data);
+        setIsDataLoaded(true);
+        // console.log("log=");
+        // console.log(typeof data);
+        setData(res.data.data)
+        // console.log(data);
     }
     useEffect(() => {
-        fetchData();    
-    }, [])
+        if(!isDataLoaded){
+            fetchData();
+        }   
+    }, [isDataLoaded])
     
 
-
+    const list = data.map((state,value)=>{
+        return (
+            <Text key={value}>{state.name}</Text>
+        )
+    })
     return (
         <div>
     StudentCourses
-        
+    {list}
     </div>
     )
 }

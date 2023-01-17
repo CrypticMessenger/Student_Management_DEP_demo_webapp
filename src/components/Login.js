@@ -58,7 +58,6 @@ export default function Login() {
   {prevlogin && (<Button variant='solid' colorScheme='blue' onClick={handleContinue} mb={8} ml={'25%'} >
   Continue previous account
   </Button>)}
-
   <Divider/>
   <Card maxW='sm' ml={'10%'}>
   <CardBody backgroundColor={'#8DCBE6'}>
