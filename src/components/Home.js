@@ -6,3 +6,4 @@ export default function Home() {
     <Heading>Home Component</Heading>
   )
 }
+

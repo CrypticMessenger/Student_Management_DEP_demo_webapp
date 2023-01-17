@@ -4,7 +4,7 @@ const express = require('express');
 const  cors = require("cors");
 const app = express();
 app.use(bodyParser.json());
-const {MongoClient, ListCollectionsCursor} = require('mongodb');
+const {MongoClient} = require('mongodb');
 const uri = "mongodb+srv://ankitsharma61016:anil1972@otp-auth.wdondav.mongodb.net/test"
 const client = new MongoClient(uri);
 client.connect();
@@ -26,7 +26,7 @@ app.use(cors());
 app.post('/api/login',async  (req, res) => {
   const email = req.body.data.email;
   const password = req.body.data.password;
-   const data = await collection_users.find({email:'2020csb1072@iitrpr.ac.in'}).project({}).toArray()
+   const data = await collection_users.find({email:email}).project({}).toArray()
    console.log(data)
   if(data[0].email === email && data[0].password === password){
     res.send({success: true})
