@@ -5,11 +5,12 @@ const  cors = require("cors");
 const app = express();
 app.use(bodyParser.json());
 const {MongoClient} = require('mongodb');
-const uri = "mongodb+srv://ankitsharma61016:anil1972@otp-auth.wdondav.mongodb.net/test"
+const uri = "mongodb+srv://user:so2QY5f6GdxnLoXJ@cluster0.6uvcoow.mongodb.net/test"
 const client = new MongoClient(uri);
 client.connect();
 const collection = client.db("test").collection('otp');
 const collection_users = client.db("current_users").collection('users');
+const collection_courses = client.db("current_users").collection('courses')
 
 
 // Create a transport object to configure the email server
@@ -37,6 +38,14 @@ app.post('/api/login',async  (req, res) => {
 
 })
 
+app.get('/api/courses',async (req, res) => {
+  const data = await collection_courses.find({}).project({}).toArray();
+  console.log("1")
+  console.log(data);
+  console.log("1")
+  res.send({data:data});
+
+})
 
 
 app.listen(5000, () => {

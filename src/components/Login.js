@@ -1,6 +1,7 @@
 import {React,useEffect,useState} from 'react'
-import { Card, Text, CardBody, CardFooter,Image,Stack,Heading,Input,Divider,ButtonGroup,Button,InputRightElement,InputGroup } from '@chakra-ui/react'
+import { Card, Text, CardBody, CardFooter,Image,Stack,Heading,Input,Divider,ButtonGroup,Button,Alert,AlertIcon,AlertTitle,AlertDescription,InputGroup } from '@chakra-ui/react'
 import { useNavigate } from "react-router-dom";
+import StudentCourses from './StudentCourses';
 import axios from "axios";
 
 export default function Login() {
@@ -9,7 +10,7 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password,setPassword] = useState("");
   const [prevlogin, setPrevlogin] = useState(false);
-
+  const [wrong_pwd, setWrong_pwd] = useState(false)
 
   useEffect(() => {
     if(localStorage.getItem('login')){
@@ -35,6 +36,7 @@ export default function Login() {
     }
     else{
       alert("wrong email / password entered!");
+      setWrong_pwd(true)
       navigate('/')
       setEmail("");
       setPassword("");
@@ -55,8 +57,9 @@ export default function Login() {
     <>
 
   {prevlogin && (<Button variant='solid' colorScheme='blue' onClick={handleContinue}>
-  "continue previous account"
+  continue previous account
   </Button>)}
+  {<StudentCourses/>}
   <Divider/>
   <Card maxW='sm'>
   <CardBody>
@@ -81,7 +84,12 @@ export default function Login() {
         placeholder='Enter Password'
         value={password} 
         onChange={handlePasswordChange}
-      />}
+      />}<br/>
+      {wrong_pwd && <Alert status='error'>
+        <AlertIcon />
+        <AlertTitle>Wrong Password/Email entered</AlertTitle>
+        <AlertDescription>Kindly enter correct credentials.</AlertDescription>
+      </Alert>}
       //! add alert and toast notifications
       
     </InputGroup>
