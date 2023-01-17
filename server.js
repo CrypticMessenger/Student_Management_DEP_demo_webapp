@@ -38,7 +38,7 @@ app.post('/api/login',async  (req, res) => {
 
 })
 
-app.get('/api/courses',async (req, res) => {
+app.post('/api/courses',async (req, res) => {
   const data = await collection_courses.find({}).project({}).toArray();
   console.log("1")
   console.log(data);

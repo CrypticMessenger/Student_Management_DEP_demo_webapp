@@ -59,7 +59,6 @@ export default function Login() {
   {prevlogin && (<Button variant='solid' colorScheme='blue' onClick={handleContinue}>
   continue previous account
   </Button>)}
-  {<StudentCourses/>}
   <Divider/>
   <Card maxW='sm'>
   <CardBody>
