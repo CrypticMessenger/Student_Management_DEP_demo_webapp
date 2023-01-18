@@ -20,9 +20,9 @@ export default function CourseInfo(props) {
         
     })
     return (
-        <Card m ={5} mt={10}>
-        <Heading align='center'>{name}</Heading>
-        <TableContainer align={'center'}>
+        <Card m ={'auto'} maxW={900}>
+        <Heading align='center' fontFamily={'Montserrat'} m={5}>{name}</Heading>
+        <TableContainer align={'center'} margin={'auto'}>
             <Table variant='simple'>
                 <Thead>
                 <Tr>
