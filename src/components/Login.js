@@ -61,7 +61,7 @@ export default function Login() {
     });
     if (res.data.success) {
       // setOptionState('OTP')
-      navigate("/home");
+      navigate("/home",{state:{email:email}});
       localStorage.setItem("login", `${email}`);
     } else {
       alert("Wrong OTP entered!");
@@ -76,7 +76,7 @@ export default function Login() {
   };
   const handleContinue = () => {
     alert(`logging in as ${localStorage.getItem("login")} `);
-    navigate("/home");
+    navigate("/home",{state:{email:email}});
   };
 
   

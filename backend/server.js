@@ -13,7 +13,10 @@ app.use(json());
 const client = new MongoClient(URI);
 
 client.connect();
-const collection_users = client.db(DataBase).collection(studentCollection);
+const collection_users = client.db('College').collection('students');
+const collection_users1 = client.db('current_users').collection('users');
+
+const collection_courses = client.db("current_users").collection('courses')
 
 
 // Create a transport object to configure the email server
@@ -72,7 +75,17 @@ app.post('/api/otp',async  (req, res) => {
   }
 })
 
+app.post('/api/courses',async (req, res) => {
+  const data = await collection_courses.find({}).project({}).toArray();
+  
+  res.send({data:data});
 
+})
+
+app.post('/api/get_inst_name',async (req, res) => {
+  const data = await collection_users1.find({email:req.body.data.email}).project({}).toArray();
+  res.send({name:data[0].name});
+})
 
 app.listen(5000, () => {
     console.log('Server is running on port 5000');
