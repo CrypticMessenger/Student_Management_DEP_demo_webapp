@@ -44,16 +44,16 @@ export default function CourseCard(props) {
     }
     return (
     <Card maxW={600} m={8} >
-        <Heading m={3}>{props.courseCode}: {props.courseName}</Heading>
+        <Heading m={3} fontFamily={'Montserrat'}>{props.courseCode}: {props.courseName}</Heading>
         
-        <Text m={5}>Instuctor: {name}</Text>
+        <Text m={5} fontFamily={'Montserrat'}>Instuctor: {name}</Text>
         <Grid templateColumns='repeat(2, 1fr)' gap={1}>
             <GridItem w='100%' h='10'>
 
-                <Button w="100%" onClick={handleInfo}>More Info</Button>
+                <Button w="100%" fontFamily={'Montserrat'} onClick={handleInfo}>More Info</Button>
             </GridItem>
             <GridItem w='100%' h='10'>
-                <Button w="100%"  onClick={handleClick} colorScheme={button_color[props.button_text_ind]} disabled={button_state[props.button_text_ind]}>{button_text[props.button_text_ind]}</Button>
+                <Button w="100%"  fontFamily={'Montserrat'} onClick={handleClick} colorScheme={button_color[props.button_text_ind]} disabled={button_state[props.button_text_ind]}>{button_text[props.button_text_ind]}</Button>
 
             </GridItem>
         
