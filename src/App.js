@@ -1,4 +1,4 @@
-import Login from './components/Login';
+import Login from './components/LoginPage/Login';
 import Home from './components/Home'
 import './App.css';
 import { ChakraProvider } from '@chakra-ui/react'
