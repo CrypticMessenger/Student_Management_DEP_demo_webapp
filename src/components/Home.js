@@ -8,8 +8,8 @@ export default function Home() {
   const email = location.state.email;
   return (
     <div align='center'>
-    <Heading align={"center"}>Hello,  {email}</Heading>
-    <StudentCourses email={email}/>
+    <Heading align={"center"} fontFamily={'Montserrat'}>Hello,  {email}</Heading>
+    <StudentCourses email={email} fontFamily={'Montserrat'} />
     </div>
   )
 }

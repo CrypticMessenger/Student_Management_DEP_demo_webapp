@@ -2,6 +2,7 @@ import { React, useEffect, useState } from "react";
 import {
   Card,
   Text,
+  Container,
   CardBody,
   CardFooter,
   Image,
@@ -87,6 +88,7 @@ export default function Login() {
         type="email"
         value={email}
         onChange={handleUsernameChange}
+        backgroundColor={'white'}
       />
     ) : (
       <Input
@@ -94,6 +96,7 @@ export default function Login() {
         placeholder="Enter Password"
         value={otp}
         onChange={handlePasswordChange}
+        backgroundColor={'white'}
       />
     );
 
@@ -114,21 +117,22 @@ export default function Login() {
     );
   return (
     <>
+    <Container mt={12}>
       {prevlogin && (
-        <Button variant="solid" colorScheme="blue" onClick={handleContinue}>
-          "continue previous account"
+        <Button variant="solid" colorScheme="blue" onClick={handleContinue}  mb={8} ml={'25%'} >
+          Continue previous account
         </Button>
       )}
       <Divider />
-      <Card maxW="sm" align="center">
-        <CardBody>
+      <Card maxW="sm" margin={'auto'}>
+        <CardBody backgroundColor={'#8DCBE6'}>
           <Image
-            src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
-            alt="Green double couch with wooden legs"
+            src='https://qph.cf2.quoracdn.net/main-qimg-931e2ae90300fef481552c51ec1b659c-lq'
+            alt='Hostel'
             borderRadius="lg"
           />
           <Stack mt="6" spacing="3">
-            <Heading size="md">Login</Heading>
+            <Heading size="md" margin={'auto'} fontFamily={'Montserrat'}>Login</Heading>
             {inputOption}
 
             {/* <Heading>{success? "SUCCESS":"INVALID CREDENTIALS"}</Heading> */}
@@ -136,11 +140,12 @@ export default function Login() {
         </CardBody>
         <Divider />
         <CardFooter>
-          <ButtonGroup spacing="2">
+        <ButtonGroup spacing='2' margin={'auto'}>
             {buttonOption}
           </ButtonGroup>
         </CardFooter>
       </Card>
+      </Container>
     </>
   );
 }

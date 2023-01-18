@@ -26,9 +26,9 @@ export default function CourseCard(props) {
     }
     return (
     <Card maxW={600} m={8} >
-        <Heading m={3}>{props.courseCode}: {props.courseName}</Heading>
-        <Text m={5}>Instuctor: {name}</Text>
-        <Button onClick={handleClick} colorScheme={button_color[props.button_text_ind]} disabled={button_state[props.button_text_ind]}>{button_text[props.button_text_ind]}</Button>
+        <Heading m={3} fontFamily={'Montserrat'}>{props.courseCode}: {props.courseName}</Heading>
+        <Text m={5} fontFamily={'Montserrat'} fontWeight={'bold'}>Instuctor: {name}</Text>
+        <Button onClick={handleClick} colorScheme={button_color[props.button_text_ind] } fontFamily={'Montserrat'} disabled={button_state[props.button_text_ind]}>{button_text[props.button_text_ind]}</Button>
         {/* <Button disabled={true}>{button_text[props.button_text_ind]}</Button> */}
     </Card>
     )
