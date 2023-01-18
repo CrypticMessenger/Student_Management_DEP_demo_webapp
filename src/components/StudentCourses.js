@@ -38,7 +38,8 @@ export default function StudentCourses(props) {
              courseName={state.course_name} 
              email={state.instructor_email} 
              button_text_ind = {button_text_ind}
-
+             students={state.students}
+             
              /> 
         )
     })
