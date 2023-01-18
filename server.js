@@ -28,7 +28,7 @@ app.post('/api/login',async  (req, res) => {
   const email = req.body.data.email;
   const password = req.body.data.password;
    const data = await collection_users.find({email:email}).project({}).toArray()
-   console.log(data)
+  //  console.log(data)
   if(data[0].email === email && data[0].password === password){
     res.send({success: true})
   }
@@ -40,11 +40,14 @@ app.post('/api/login',async  (req, res) => {
 
 app.post('/api/courses',async (req, res) => {
   const data = await collection_courses.find({}).project({}).toArray();
-  console.log("1")
-  console.log(data);
-  console.log("1")
+  
   res.send({data:data});
 
+})
+
+app.post('/api/get_inst_name',async (req, res) => {
+  const data = await collection_users.find({email:req.body.data.email}).project({}).toArray();
+  res.send({name:data[0].name});
 })
 
 

@@ -17,10 +17,17 @@ export default function Login() {
     }
   },[])
 
-  const handleUsernameChange = (e)=>{
+  const handleEmailChange = (e)=>{
     setEmail(e.target.value);
   }
  
+  const handlePasswordChange = (e)=>{
+    setPassword(e.target.value);
+  }
+  const handleContinue = ()=>{
+    alert(`logging in as ${localStorage.getItem('login')} `)
+    navigate('/home',{state:{email: localStorage.getItem('login')}})
+  }
   const handleSubmit = async (e)=>{
     e.preventDefault();
     
@@ -30,7 +37,7 @@ export default function Login() {
     let body = {email:email, password:password};
     const res = await axios.post("http://localhost:5000/api/login",{data:body});
     if(res.data.success){
-      navigate('/home');
+      navigate('/home',{state:{email:email}});
       localStorage.setItem("login",`${email}`);
     }
     else{
@@ -43,13 +50,6 @@ export default function Login() {
       
   }
  
-  const handlePasswordChange = (e)=>{
-    setPassword(e.target.value);
-  }
-  const handleContinue = ()=>{
-    alert(`logging in as ${localStorage.getItem('login')} `)
-    navigate('/home')
-  }
   
   return (
     <>
@@ -68,7 +68,7 @@ export default function Login() {
     />
     <Stack mt='6' spacing='3'>
       <Heading size='md' margin={'auto'} fontFamily={'Montserrat'}>Login</Heading>
-      <Input placeholder='Enter email'  type="email" value={email} onChange={handleUsernameChange} backgroundColor={'white'}/>
+      <Input placeholder='Enter email'  type="email" value={email} onChange={handleEmailChange} backgroundColor={'white'}/>
       <InputGroup size='md' backgroundColor={'white'}>
       {/* <Input
         pr='4.5rem'
@@ -77,12 +77,12 @@ export default function Login() {
         value={password} 
         onChange={handlePasswordChange}
       /> */}
-      { <Input
+      <Input
         pr='4.5rem'
         placeholder='Enter Password'
         value={password} 
         onChange={handlePasswordChange}
-        />}
+        />
       //! add alert and toast notifications
       
     </InputGroup>
