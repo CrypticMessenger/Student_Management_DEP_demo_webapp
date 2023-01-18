@@ -12,7 +12,8 @@ import {
   Divider,
   ButtonGroup,
   Button,
-  InputRightElement,
+  Highlight,
+  Box,
   InputGroup,
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
@@ -118,11 +119,7 @@ export default function Login() {
   return (
     <>
     <Container mt={12}>
-      {prevlogin && (
-        <Button variant="solid" colorScheme="blue" onClick={handleContinue}  mb={8} ml={'25%'} >
-          Continue previous account
-        </Button>
-      )}
+     
       <Divider />
       <Card maxW="sm" margin={'auto'}>
         <CardBody backgroundColor={'#8DCBE6'}>
@@ -145,6 +142,23 @@ export default function Login() {
           </ButtonGroup>
         </CardFooter>
       </Card>
+      <Box maxW='x1'>
+
+<Heading lineHeight='tall' fontFamily={'Montserrat'} size='sm'>
+<Highlight
+query={['G10','Amit','Ankit','Nishant','Pragat']}
+styles={{ px: '2', rounded: 'full', bg: 'blue.100' }}
+>
+Group ID G10
+</Highlight><br/>
+<Highlight
+query={['2020csb1070','2020csb1072','2020csb1102','2020csb1109']}
+styles={{ px: '2', rounded: 'full', bg: 'blue.100' }}
+>
+Amit Kumar [2020csb1070], Ankit Sharma [2020csb1072], Nishant Sharma [2020csb1102], Pragat Sharma [2020csb1109]
+</Highlight>
+</Heading>
+</Box>
       </Container>
     </>
   );

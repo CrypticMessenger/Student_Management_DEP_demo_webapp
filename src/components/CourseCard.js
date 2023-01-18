@@ -12,7 +12,7 @@ export default function CourseCard(props) {
     const [name, setName] = useState("");
     const [students, setStudents] = useState([]);
     const button_text = ["Request","Pending Instructor Approval","Pending Advisor Approval","Accepted"]
-    const button_state = [false,true,true,true]
+    const button_state = [0,true,true,true]
     const button_color = ['blue','gray','gray','green']
     
     const fetchName = async ()=>{
