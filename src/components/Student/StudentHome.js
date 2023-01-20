@@ -3,7 +3,7 @@ import React from 'react'
 import { useLocation } from 'react-router-dom'
 import StudentCourses from './StudentCourses';
 
-export default function Home() {
+export default function StudentHome() {
   const location = useLocation(); 
   const email = location.state.email;
   return (

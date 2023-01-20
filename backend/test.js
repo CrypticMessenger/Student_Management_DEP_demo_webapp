@@ -5,7 +5,9 @@ async function main()
     {   
         const client = new MongoClient(URI)
         try{
-            
+            client.connect()
+            let cursor = client.db('current_users').collection('users').find()
+            await cursor.forEach(data => console.log(data))
         }
         catch(e){
             console.log(e)
@@ -15,4 +17,5 @@ async function main()
         }
     }
 
-main().catch((e) => {console.log(e)})
+// main().catch((e) => {console.log(e)})
+

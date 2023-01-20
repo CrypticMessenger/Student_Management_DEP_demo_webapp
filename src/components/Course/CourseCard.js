@@ -8,27 +8,28 @@ import { useNavigate } from "react-router-dom";
 export default function CourseCard(props) {
     const toast = useToast();
     const navigate = useNavigate();
-
+    const userType = 0
     const [name, setName] = useState("");
     const [students, setStudents] = useState([]);
-    const button_text = ["Request","Pending Instructor Approval","Pending Advisor Approval","Accepted"]
-    const button_state = [0,true,true,true]
-    const button_color = ['blue','gray','gray','green']
+    const button_text = ["Request","Pending Instructor Approval","Pending Advisor Approval","Accepted","Rejected"]
+    const button_state = [false,true,true,true,true]
+    const button_color = ['blue','gray','gray','green','red']
     
     const fetchName = async ()=>{
         const body = {email:props.email}
         const res = await axios.post("http://localhost:5000/api/get_inst_name",{data:body})
+        // console.log(props)
         setStudents(res.data.students)
         setName(res.data.name)
     }
 
     useEffect( () => {
-        
         fetchName();
-      
-    }, [])
+    })
     
-    const handleClick = () => {
+    const handleClick = async () => {
+        const res = await axios.post("http://localhost:5000/api/enroll",{studentMail : props.user,courseCode: props.courseCode})
+        console.log(res.data)
         toast({
             title: 'Course requested!',
             description: `${props.courseName} course requested...`,
@@ -53,7 +54,7 @@ export default function CourseCard(props) {
                 <Button w="100%" fontFamily={'Montserrat'} onClick={handleInfo}>More Info</Button>
             </GridItem>
             <GridItem w='100%' h='10'>
-                <Button w="100%"  fontFamily={'Montserrat'} onClick={handleClick} colorScheme={button_color[props.button_text_ind]} disabled={button_state[props.button_text_ind]}>{button_text[props.button_text_ind]}</Button>
+                <Button w="100%"  fontFamily={'Montserrat'} onClick={handleClick} colorScheme={button_color[props.status]} isDisabled={button_state[props.status]}>{button_text[props.status]}</Button>
 
             </GridItem>
         
