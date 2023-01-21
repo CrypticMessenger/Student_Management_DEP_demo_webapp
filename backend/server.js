@@ -118,7 +118,7 @@ async function main() {
         .find({ email: req.body.data.email })
         .project({})
         .toArray();
-      res.send({ name: data[0].name });
+      res.send({ name: data[0].name })
     });
 
     app.post("/api/student/enroll", async (req, res) => {
