@@ -33,7 +33,7 @@ export function CourseInfo(props) {
   const courseCode = location.state.courseCode;
   const handleClick = async (response,studentmail) => {
     const res = await axios.post(
-      "http://localhost:5000/api/instructor/instructorResponse",
+      "http://localhost:5000/api/advisor/advisorResponse",
       { response: response ,courseCode : courseCode,studentMail : studentmail}
     );
     console.log(res.data.message);
@@ -63,7 +63,7 @@ export function CourseInfo(props) {
       <Tr key={value}>
         <Th>{email}</Th>
         <Th>{name}</Th>
-        {status === 1 ? (
+        {status === 2 ? (
           <Th>
             <Button
               w="50%"

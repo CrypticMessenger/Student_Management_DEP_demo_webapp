@@ -1,12 +1,12 @@
 import {React,useEffect,useState} from 'react'
 import {Text} from "@chakra-ui/react"
 import axios from 'axios'
-import CourseCard from '../Course/CourseCard'
+import CourseCard from './CourseCard'
 export default function StudentCourses(props) {
     const [data, setData] = useState([])
     // const [isDataLoaded, setIsDataLoaded] = useState(false);
     const fetchData = async ()=>{
-        const res = await axios.post("http://localhost:5000/api/courses");
+        const res = await axios.post("http://localhost:5000/api/courses",{});
         // setIsDataLoaded(true);
         // console.log(res.data.data)
         setData(res.data.data)

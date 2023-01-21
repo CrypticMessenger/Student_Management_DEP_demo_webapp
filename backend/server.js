@@ -22,7 +22,7 @@ async function main() {
     await client.connect();
     const collection_users1 = client.db("current_users").collection("users");
 
-    const collection_courses = client.db("current_users").collection("courses");
+    const collection_courses = client.db("current_users").collection("mycourses");
 
     // Create a transport object to configure the email server
     const transport = createTransport({
@@ -94,15 +94,26 @@ async function main() {
     });
 
     app.post("/api/courses", async (req, res) => {
-      const obj =
-        req.body.email === undefined
-          ? {}
-          : { instructor_email: req.body.email };
-      const data = await collection_courses.find(obj).project({}).toArray();
-      res.send({ data: data });
+      try{
+        let obj = req.body
+        console.log(obj)
+        if(req.body.advisor_email !== undefined)
+          {
+            let collection_advisors = client.db('current_users').collection('advisors')
+            obj = await collection_advisors.findOne({email : req.body.advisor_email})
+            obj = {dept : obj.dept}
+          }
+        const data = await collection_courses.find(obj).project({}).toArray();
+        console.log(data)
+        res.send({ data: data });
+      }
+      catch(e)
+        {
+          res.send({message : e})
+        }
     });
 
-    app.post("/api/get_inst_name", async (req, res) => {
+    app.post("/api/student_list", async (req, res) => {
       const data = await collection_users1
         .find({ email: req.body.data.email })
         .project({})
@@ -110,7 +121,7 @@ async function main() {
       res.send({ name: data[0].name });
     });
 
-    app.post("/api/enroll", async (req, res) => {
+    app.post("/api/student/enroll", async (req, res) => {
       const studentMail = req.body.studentMail;
       const courseCode = req.body.courseCode;
       try {
@@ -152,7 +163,7 @@ async function main() {
         res.send(e);
       }
     });
-    app.post('/api/instructorResponse',async (req,res) => {
+    app.post('/api/instructor/instructorResponse',async (req,res) => {
       let response = req.body.response
       let courseCode = req.body.courseCode
       let studentMail = req.body.studentMail
@@ -164,6 +175,40 @@ async function main() {
       let finalStatus = 4
       if(response)
           finalStatus = 2;
+      for(let i = 0;i<l;i++)
+        {
+          if(updatedStudentsArray[i][0] === studentMail)
+            {
+              updatedStudentsArray[i][2] = finalStatus;
+              break;
+            }
+        }
+        try {
+          await collection_courses.updateOne(
+            { course_code: courseCode },
+            {
+              $set: {
+                students: updatedStudentsArray,
+              },
+            }
+          );
+        } catch (e) {
+          res.send({message : e});
+        }
+      res.send({message : "Operation Successfull."})
+    })
+    app.post('/api/advisor/advisorResponse',async (req,res) => {
+      let response = req.body.response
+      let courseCode = req.body.courseCode
+      let studentMail = req.body.studentMail
+      const data = await collection_courses.findOne({
+        course_code: courseCode,
+      });
+      let updatedStudentsArray = data.students
+      let l = updatedStudentsArray.length
+      let finalStatus = 4
+      if(response)
+          finalStatus = 3;
       for(let i = 0;i<l;i++)
         {
           if(updatedStudentsArray[i][0] === studentMail)

@@ -2,13 +2,13 @@ import { React, useEffect, useState } from "react";
 import { Text } from "@chakra-ui/react";
 import axios from "axios";
 import CourseCard from "./CourseCard";
-export default function InstructorCourses(props) {
+export default function AdvisorCourses(props) {
   const [data, setData] = useState([]);
   const email = props.email;
   // const [isDataLoaded, setIsDataLoaded] = useState(false);
   const fetchData = async () => {
     const res = await axios.post("http://localhost:5000/api/courses", {
-      instructor_email: email,
+      advisor_email: email,
     });
     // setIsDataLoaded(true);
     console.log(res.data.data);
@@ -38,7 +38,7 @@ export default function InstructorCourses(props) {
         key={value}
         courseCode={state.course_code}
         courseName={state.course_name}
-        email={state.instructor_email}
+        instructor_email={state.instructor_email}
         button_text_ind={button_text_ind}
         students={state.students}
       />
