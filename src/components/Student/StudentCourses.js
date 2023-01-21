@@ -6,7 +6,7 @@ export default function StudentCourses(props) {
     const [data, setData] = useState([])
     // const [isDataLoaded, setIsDataLoaded] = useState(false);
     const fetchData = async ()=>{
-        const res = await axios.post("http://localhost:5000/api/courses",{});
+        const res = await axios.post("https://crypticmessengerdep.onrender.com/api/courses",{});
         // setIsDataLoaded(true);
         // console.log(res.data.data)
         setData(res.data.data)

@@ -33,7 +33,7 @@ export function CourseInfo(props) {
   const courseCode = location.state.courseCode;
   const handleClick = async (response,studentmail) => {
     const res = await axios.post(
-      "http://localhost:5000/api/instructor/instructorResponse",
+      "https://crypticmessengerdep.onrender.com/instructor/instructorResponse",
       { response: response ,courseCode : courseCode,studentMail : studentmail}
     );
     console.log(res.data.message);
