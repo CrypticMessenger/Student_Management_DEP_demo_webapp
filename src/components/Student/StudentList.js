@@ -2,9 +2,9 @@ import { Th ,Tr,TableContainer,Thead,Tbody,Table,Card, Heading} from '@chakra-ui
 import React from 'react'
 import { useLocation } from 'react-router-dom'
 
-export default function CourseInfo(props) {
+export default function CourseInfo() {
     const location = useLocation(); 
-    const button_text = ["Request","Pending Instructor Approval","Pending Advisor Approval","Accepted"]
+    const button_text = ["Request","Pending Instructor Approval","Pending Advisor Approval","Accepted","Rejected"]
 
     const students = location.state.students;
     const name = location.state.name;

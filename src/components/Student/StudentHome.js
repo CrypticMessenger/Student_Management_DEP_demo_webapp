@@ -3,9 +3,9 @@ import React from 'react'
 import { useLocation } from 'react-router-dom'
 import StudentCourses from './StudentCourses';
 
-export default function Home() {
+export default function StudentHome() {
   const location = useLocation(); 
-  const email = location.state.email;
+  const [email,setEmail] = React.useState(location.state.email);
   return (
     <div align='center'>
     <Heading align={"center"} fontFamily={'Montserrat'}>Hello,  {email}</Heading>
