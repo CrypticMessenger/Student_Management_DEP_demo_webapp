@@ -17,7 +17,7 @@ export default function CourseCard(props) {
     
     const fetchName = async ()=>{
         const body = {email:props.email}
-        const res = await axios.post("http://localhost:5000/api/student_list",{data:body})
+        const res = await axios.post("https://crypticmessengerdep.onrender.com/api/student_list",{data:body})
         // console.log(props)
         setStudents(res.data.students)
         setName(res.data.name)
@@ -28,7 +28,7 @@ export default function CourseCard(props) {
     })
     
     const handleClick = async () => {
-        const res = await axios.post("http://localhost:5000/api/student/enroll",{studentMail : props.user,courseCode: props.courseCode})
+        const res = await axios.post("https://crypticmessengerdep.onrender.com/api/student/enroll",{studentMail : props.user,courseCode: props.courseCode})
         console.log(res.data)
         toast({
             title: 'Course requested!',

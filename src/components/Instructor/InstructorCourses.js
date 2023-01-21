@@ -7,7 +7,7 @@ export default function InstructorCourses(props) {
   const email = props.email;
   // const [isDataLoaded, setIsDataLoaded] = useState(false);
   const fetchData = async () => {
-    const res = await axios.post("http://localhost:5000/api/courses", {
+    const res = await axios.post("https://crypticmessengerdep.onrender.com/api/courses", {
       instructor_email: email,
     });
     // setIsDataLoaded(true);

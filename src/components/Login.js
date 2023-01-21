@@ -50,7 +50,7 @@ export default function Login() {
     if(userState === UserState[1]) userType = 1;
     else if(userState === UserState[2]) userType = 2;
     let body = { email: email,usertype : userType };
-    const res = await axios.post("http://localhost:5000/api/login", {
+    const res = await axios.post("https://crypticmessengerdep.onrender.com/api/login", {
       data: body,
     });
     if (res.data.success) {
@@ -69,7 +69,7 @@ export default function Login() {
     e.preventDefault();
 
     let body = { otp: otp };
-    const res = await axios.post("http://localhost:5000/api/otp", {
+    const res = await axios.post("https://crypticmessengerdep.onrender.com/api/otp", {
       data: body,
     });
     if (res.data.success) {
