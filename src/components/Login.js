@@ -25,8 +25,8 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export default function Login() {
-  const UserState = ["Student","Instructor","Advisor"]
-  const UserStateTabs = UserState.map((user,i) => <Tab key={i}>{user}</Tab>)
+  const UserState = ["Student", "Instructor", "Advisor"];
+  const UserStateTabs = UserState.map((user, i) => <Tab key={i}>{user}</Tab>);
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [otp, setOtp] = useState("");
@@ -46,40 +46,55 @@ export default function Login() {
 
   const handleEmailSubmit = async (e) => {
     e.preventDefault();
-    let userType= 0;
-    if(userState === UserState[1]) userType = 1;
-    else if(userState === UserState[2]) userType = 2;
-    let body = { email: email,usertype : userType };
-    const res = await axios.post("https://crypticmessengerdep.onrender.com/api/login", {
-      data: body,
-    });
-    if (res.data.success) {
-      setOptionState("OTP");
+    let userType = 0;
+    if (userState === UserState[1]) userType = 1;
+    else if (userState === UserState[2]) userType = 2;
+    const regex = new RegExp("^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+    if (!regex.test(email)) alert("This user doesnt exists!");
+    else {
+      let body = { email: email, usertype: userType };
+      const res = await axios.post(
+        "https://crypticmessengerdep.onrender.com/api/login",
+        {
+          data: body,
+        }
+      );
+      if (res.data.success) {
+        setOptionState("OTP");
 
-      // navigate("/home");
-      // localStorage.setItem("login", `${email}`);
-    } else {
-      alert("This user does not exists!");
-      navigate("/");
-      setEmail("");
-      setOtp("");
+        // navigate("/home");
+        // localStorage.setItem("login", `${email}`);
+      } else {
+        alert("This user does not exists!");
+        navigate("/");
+        setEmail("");
+        setOtp("");
+      }
     }
   };
   const handleOTPSubmit = async (e) => {
     e.preventDefault();
-
+    const regex = new RegExp('[0-9]{4}')
+    if(!regex.test(otp))
+      {
+        alert("Wrong OTP entered");
+      }
+    else
+      {
     let body = { otp: otp };
-    const res = await axios.post("https://crypticmessengerdep.onrender.com/api/otp", {
-      data: body,
-    });
+    const res = await axios.post(
+      "https://crypticmessengerdep.onrender.com/api/otp",
+      {
+        data: body,
+      }
+    );
     if (res.data.success) {
       // setOptionState('OTP')
-      if(userState === UserState[0]) 
-      navigate("/homeStudent", { state: { email: email } });
-      else if(userState === UserState[1])
-      navigate("/homeInstructor", { state: { email: email } });
-      else 
-      navigate("/homeAdvisor", { state: { email: email } });
+      if (userState === UserState[0])
+        navigate("/homeStudent", { state: { email: email } });
+      else if (userState === UserState[1])
+        navigate("/homeInstructor", { state: { email: email } });
+      else navigate("/homeAdvisor", { state: { email: email } });
       localStorage.setItem("login", `${email}`);
     } else {
       alert("Wrong OTP entered!");
@@ -87,6 +102,7 @@ export default function Login() {
       // setEmail("");
       setOtp("");
     }
+  }
   };
 
   const handlePasswordChange = (e) => {
@@ -146,11 +162,9 @@ export default function Login() {
               <Tabs
                 isFitted
                 variant="enclosed"
-                onChange={index => setUserState(UserState[index])}
+                onChange={(index) => setUserState(UserState[index])}
               >
-                <TabList mb="1em">
-                  {UserStateTabs}
-                </TabList>
+                <TabList mb="1em">{UserStateTabs}</TabList>
               </Tabs>
               {inputOption}
 
@@ -170,7 +184,7 @@ export default function Login() {
               query={["G10", "Amit", "Ankit", "Nishant", "Pragat"]}
               styles={{ px: "2", rounded: "full", bg: "blue.100" }}
             >
-              Group ID G10
+              Group ID T10
             </Highlight>
             <br />
             <Highlight
