@@ -56,7 +56,7 @@ async function main() {
         .project({})
         .toArray();
       console.log(data);
-      if (data[0].email === userEmail) {
+      if (data.length > 0 && data[0].email === userEmail) {
         res.send({ success: true });
         app.otp = String(Math.floor(Math.random() * 1000 + 1000));
         let mailDetails = {
