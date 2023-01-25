@@ -20,7 +20,7 @@ async function main() {
   app.use(json());
   try {
     await client.connect();
-    const collection_users1 = client.db("current_users").collection("users");
+    // const collection_users1 = client.db("current_users").collection("users");
 
     const collection_courses = client.db("current_users").collection("mycourses");
 
@@ -114,7 +114,8 @@ async function main() {
     });
 
     app.post("/api/student_list", async (req, res) => {
-      const data = await collection_users1
+      const collection_instructors = client.db("current_users").collection("instructors")
+      const data = await collection_instructors
         .find({ email: req.body.data.email })
         .project({})
         .toArray();
