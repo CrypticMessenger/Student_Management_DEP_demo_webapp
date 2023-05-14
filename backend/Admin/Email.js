@@ -1,4 +1,4 @@
 let adminEmail = 'dep45.dep@gmail.com'
-let adminPassword = 'yuudrrwlbsufyqwv'
+let adminPassword = '-'
 
 export {adminEmail,adminPassword}
